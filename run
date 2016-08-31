@@ -3,7 +3,7 @@
 for file in Samples/*.fa; do
 
     echo "$file"
-    python seq_identifier.py --min-len=4 --min-gap=2 --max-gap=3 -p Allels_Trimv2_1.fa -s "$file"
+    python seq_identifier.py --min-len=4 --min-gap=2 --max-gap=4 -p Allels_Trimv2_1.fa -s "$file"
 
 done
 

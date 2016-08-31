@@ -137,6 +137,11 @@ def main(argv):
     pdfFile   = open(outputPath + "/" + sampFname + ".pdf", "w+b")
     htmlFile  = open(outputPath + "/" + sampFname + ".htm", "w")
     bodyHTML  = "<span class=\"TEXT\">"
+    bodyHTML += "Minimum Length: <strong>" + str(minLen) + "</strong><br />"
+    bodyHTML += "Minimum Gap: <strong>" + str(minGap) + "</strong><br />"
+    bodyHTML += "Maximum Gap: <strong>" + str(maxGap) + "</strong><br />"
+    bodyHTML += "Start Anchor: <strong>" + str(anchor["st"]) + "</strong><br />"
+    bodyHTML += "End Anchor: <strong>" + str(anchor["en"]) + "</strong><br />"
     bodyHTML += "Sample File: <strong>" + str(sampleFile) + "</strong><br /><br />"
     bodyHTML += "Pattern Sequences:<br />"
     bodyHTML += "</span>"
