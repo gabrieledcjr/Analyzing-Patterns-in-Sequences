@@ -1,12 +1,9 @@
 #! /bin/sh
 
-for file in `ls -a Samples/*.fa`; do
+for file in Samples/*.fa; do
 
     echo "$file"
-    filWExt=${file:8}
-    filWOExt=${filWExt%\.*}
-
-    python seq_identifier.py -p Allels_Trimv2.fa -s "$filWExt" -d > Results/"$filWOExt"_with_patterns.txt
+    python seq_identifier.py --min-len=4 --min-gap=2 --max-gap=3 -p Allels_Trimv2_1.fa -s "$file"
 
 done
 

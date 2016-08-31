@@ -61,7 +61,7 @@ def GetSequences(fileName="", fileType="fasta", path="", isPatterns=False, name=
 
   # Write to file sequences with stop codons
   if not isPatterns and ctr2 > 0:
-    WriteToFileStopCodons(fileName.split('.')[0], seqsWithCodons)
+    WriteToFileStopCodons(fileName.split('/')[-1].split('.')[0], seqsWithCodons)
 
   return seqIds, sequences, ctr, ctr2
 # end GetSequences()

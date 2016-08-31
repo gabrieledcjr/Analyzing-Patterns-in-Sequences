@@ -14,7 +14,25 @@ from xhtml2pdf import pisa
 
 
 def usage():
-  print 'seq_identifier.py -p <patternFile> -s <sampleFile>'
+  print "Usage:"
+  print "  seq_identifier.py -p <patternFile> -s <sampleFile>"
+  print "  seq_identifier.py --min-len=1 --max-gap=3 -p <patternFile> -s <sampleFile>"
+  print "  seq_identifier.py [Other Options] [Required Arguments]"
+  print
+  print "Required Arguments:"
+  print "  -p, --pattern=FILE    Pattern file location"
+  print "  -s, --sample=FILE     Sample file location"
+  print
+  print "Optional Arguments:"
+  print "  -h, --help            Help"
+  print "  -d, --debug           Turn on debug mode"
+  print "  --min-len=NUM         Minimum length for pattern match [Default 4]"
+  print "  --min-gap=NUM         Minimum gap [Default 1]"
+  print "  --max-gap=NUM         Maximum gap [Default 4]"
+  print "  --out-pdf=[0 or 1]    Output pdf file [Default 1 (true)]"
+  print "  --st-anchor=STRING    Starting anchor [Default KWG]"
+  print "  --en-anchor=STRING    Ending anchor [Default GMA]"
+  print
 
 ##################################################################
 # NEEDS SOME CHANGING TO CONSIDER MISSING CHARACTER IN SAMPLE    #
@@ -43,8 +61,22 @@ def CombineSamePattern(match):
 
 def main(argv):
 
+  # CONFIGURATION VARIABLES
+  noMatch = []
+  results = {}
+  results_ = {}
+  minLen = 4        # minimum length of pattern match
+  minGap = 2        # minimum gap 1 means don't search for pattern with gap length of 1
+  maxGap = 4        # anything over maxGap is considered a no match
+  htmlToPdf = True  # set to True if you want pdf output file
+  anchor = { "st":"KWG", "en":"GMA" } # set values for st and en if using anchors
+  #anchor = { "st":"", "en":"" }       # use this if not using anchors
+
   try:
-    opts, args = getopt.getopt(argv, "hp:s:d", ["help", "pattern=", "samplefile="])
+    opts, args = getopt.getopt(argv, "hp:s:d",
+                               ["help", "debug", "pattern=", "sample=",
+                                "min-len=","min-gap=","max-gap=",
+                                "out-pdf=","st-anchor=","en-anchor="])
 
   except getopt.GetoptError:
     usage()
@@ -54,37 +86,49 @@ def main(argv):
     if opt in ("-h", "--help"):
       usage()
       sys.exit()
-    elif opt == '-d':
+    elif opt in ("-d", "--debug"):
       print "[DEBUG MODE]"
       GlobalVars.DEBUG = True
     elif opt in ("-p", "--pattern"):
       patternFile = arg
-    elif opt in ("-s", "--samplefile"):
+    elif opt in ("-s", "--sample"):
       sampleFile = arg
+    elif opt == "--min-len":
+      minLen = int(arg)
+    elif opt == "--min-gap":
+      minGap = int(arg)
+    elif opt == "--max-gap":
+      maxGap = int(arg)
+    elif opt == "--out-pdf":
+      htmlToPdf = False if arg == '0' else True
+    elif opt == "--st-anchor":
+      anchor["st"] = arg
+    elif opt == "--en-anchor":
+      anchor["en"] = arg
 
-  # CONFIGURATION VARIABLES
-  noMatch = []
-  results = {}
-  results_ = {}
-  minLen = 4        # minimum length of pattern match
-  minGap = 1        # minimum gap 1 means don't search for pattern with gap length of 1
-  maxGap = 4        # anything over maxGap is considered a no match
-  htmlToPdf = True  # set to True if you want pdf output file
-  anchor = { "st":"KWG", "en":"GMA" } # set values for st and en if using anchors
-  #anchor = { "st":"", "en":"" }       # use this if not using anchors
+  print "Configuration Settings"
+  print "----------------------"
+  print "Minimum Length: " + str(minLen)
+  print "Minimum Gap: " + str(minGap)
+  print "Maximum Gap: " + str(maxGap)
+  print "PDF Output: " + str(htmlToPdf)
+  print "Start Anchor: " + str(anchor["st"])
+  print "End Anchor: " + str(anchor["en"])
+  print "Sample File: " + str(sampleFile)
+  print "\n"
 
   # Step 1: Retrieve allele patterns
   alleleIds, allelePatterns, numPatterns, _ = GetSequences(patternFile, "fasta", os.getcwd() + "/Library/", True, "Allele Patterns")
 
-  print "Sample File: " + str(sampleFile)
-  print
-
   print "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
   print "Pattern Sequences:"
 
-  sampFname = sampleFile.split('.')[0]
+  sampFname = sampleFile.split('/')[-1]
+  sampFname = sampFname.split('.')[0]
+  print sampFname
   cwd = os.getcwd()
   outputPath = cwd + '/Results/' + sampFname
+  print outputPath
   MakeDir(outputPath)
 
 
@@ -112,7 +156,7 @@ def main(argv):
   print "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
   # Step 2: Load sample sequences and identify duplicates
-  sampleIds, sampleSequences, totalSeqs, totalSeqsStCodons =  GetSequences(sampleFile, "fasta", os.getcwd() + "/Samples/", False, "Sample Sequences")
+  sampleIds, sampleSequences, totalSeqs, totalSeqsStCodons =  GetSequences(sampleFile, "fasta", os.getcwd() + "/", False, "Sample Sequences")
 
   # Step 3: Identify what pattern the sample sequence belongs
   numSamps = len(sampleIds)
@@ -240,7 +284,6 @@ def main(argv):
 
   print "SEQUENCES CONSIDERED A NO MATCH"
   for key in noMatchKeys:
-
     # Print out data for result table for NO MATCH
     print "%4d\t%s" %(results[key], key)
 
@@ -345,7 +388,7 @@ def run(pattern, sample):
   print "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
   # Step 2: Load sample sequences and identify duplicates
-  sampleIds, sampleSequences, totalSeqs, totalSeqsStCodons =  GetSequences(sampleFile, "fasta", os.getcwd() + "/Samples/", False, "Sample Sequences")
+  sampleIds, sampleSequences, totalSeqs, totalSeqsStCodons =  GetSequences(sampleFile, "fasta", os.getcwd() + "/", False, "Sample Sequences")
 
   # Step 3: Identify what pattern the sample sequence belongs
   numSamps = len(sampleIds)
@@ -471,7 +514,6 @@ def run(pattern, sample):
 
   print "SEQUENCES CONSIDERED A NO MATCH"
   for key in noMatchKeys:
-
     # Print out data for result table for NO MATCH
     print "%4d\t%s" %(results[key], key)
 
@@ -499,55 +541,12 @@ def run(pattern, sample):
                    "</em></td><td style=\"vertical-align:middle\"><em>Seq w/ gap length > " + str(maxGap) + "</em></td></tr>"
     resultTable += "</table>"
 
-
   # Write PDF File
   if htmlToPdf:
     global html
     html += bodyHTML + resultTable
     pisa.CreatePDF(html, dest=pdfFile)
     pdfFile.close()
-
-'''
-    patternMatch = DeterminePattern(sampleSequences[num], num, allelePatterns, numPatterns)
-    if patternMatch != None:
-      patternMatch = CombineSamePattern(patternMatch)
-
-    if patternMatch != None:
-      pattern = ""
-      for index in range(0, len(patternMatch)):
-        pattern += str(patternMatch[index][1].num + 1)
-
-      if pattern not in results:
-        results[pattern] = [numberOfSequences, [patternMatch]]
-      else:
-        results[pattern][0] += numberOfSequences
-        results[pattern][1] += [patternMatch]
-    else:
-      totalNoMatches += numberOfSequences
-      noMatch += [(sampleIds[num], sampleSequences[num])]
-
-    if GlobalVars.DEBUG:
-      if patternMatch == None:
-        print "No Match\n"
-      else:
-        print "Matched!\n"
-
-  sortedKeys = sorted(results, key=results.get, reverse=True)
-  print "PATTERN   # SEQUENCES"
-  for key in sortedKeys:
-    print "%-7s   %d" %(key, results[key][0])
-    WriteToFile(sampleFile.split('.')[0], key, results[key][1], sampleIds, sampleSequences)
-  print
-
-  noMatchLen = len(noMatch)
-  if noMatchLen > 0:
-    print "Total number of sequences (with no match) : %d" %(totalNoMatches)
-    print
-    WriteToFileNoMatches(sampleFile.split('.')[0], noMatch, sampleIds, sampleSequences)
-    for index in range(0, noMatchLen):
-      print "Seq %d: %s" %(index+1, noMatch[index][0])
-      print "%s\n" %(noMatch[index][1])
-'''
 
 
 if __name__ == '__main__':
