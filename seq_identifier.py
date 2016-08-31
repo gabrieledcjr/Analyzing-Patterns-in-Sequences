@@ -34,9 +34,7 @@ def usage():
   print "  --en-anchor=STRING    Ending anchor [Default GMA]"
   print
 
-##################################################################
-# NEEDS SOME CHANGING TO CONSIDER MISSING CHARACTER IN SAMPLE    #
-##################################################################
+
 def CombineSamePattern(match):
   totalPatterns = len(match)
   if totalPatterns == 1:
@@ -481,8 +479,6 @@ def run(pattern, sample):
     # Print out data for result table for GOOD MATCH
     totalSeq += results[key]
     print "%4d\t%s" %(results[key], key)
-
-
 
     if htmlToPdf:
       sResultTab = "<table cellpadding=\"0px\" width=\"640px\">"
