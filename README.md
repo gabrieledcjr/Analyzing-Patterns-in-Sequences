@@ -9,8 +9,8 @@ Analyzing-Patterns-in-Sequences
 
 ##How to use program for a single sample file
 ```
-python seq_identifier.py -p \<patterns.fa\> -s \<sample.fa\>
-python seq_identifier.py --min-len=1 --max-gap=3 -p \<patternFile\> -s \<sampleFile\>
+python seq_identifier.py -p <patterns.fa> -s <sample.fa>
+python seq_identifier.py --min-len=1 --max-gap=3 -p <patternFile> -s <sampleFile>
 python seq_identifier.py [Other Options] [Required Arguments]
 ```
 
