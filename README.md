@@ -3,8 +3,8 @@ Analyzing-Patterns-in-Sequences
 
 ##Software Requirements
 * Tested only on Python 2.7
-* BioPython --- `pip install biopython`
-* xhtml2dpf python module --- `pip install xhtml2pdf`
+* BioPython, `pip install biopython`
+* xhtml2dpf python module, `pip install xhtml2pdf`
 * MUST create a `Results` folder at the same level as the `Library` folder. All output of the program are saved in this folder.
 
 ##How to use program for a single sample file
