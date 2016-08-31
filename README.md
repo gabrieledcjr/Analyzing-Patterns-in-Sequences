@@ -22,19 +22,19 @@ At `line 6`, you can change the values of the arguments or add more arguments as
 Once you are satisfied with the setup, you can run this command in the terminal by typing `./run`.
 
 ##Required Arguments
-| Argument           | Description            |
-| ------------------ | ---------------------- |
-| -p, --pattern=FILE | Pattern file location  |
-| -s, --sample=FILE  | Sample file location"  |
+| Argument               | Description            |
+| ---------------------- | ---------------------- |
+| `-p`, `--pattern=FILE` | Pattern file location  |
+| `-s`, `--sample=FILE`  | Sample file location"  |
 
 ##Optional Arguments
-| Argument           | Description                                  |
-| ------------------ | -------------------------------------------- |
-| -h, --help         | Help                                         |
-| -d, --debug        | Turn on debug mode                           |
-| --min-len=NUM      | Minimum length for pattern match [Default 4] |
-| --min-gap=NUM      | Minimum gap [Default 1]                      |
-| --max-gap=NUM      | Maximum gap [Default 4]                      |
-| --out-pdf=[0 or 1] | Output pdf file [Default 1 (true)]           |
-| --st-anchor=STRING | Starting anchor [Default KWG]                |
-| --en-anchor=STRING | Ending anchor [Default GMA]                  |
+| Argument             | Description                                  |
+| -------------------- | -------------------------------------------- |
+| `-h`, `--help`       | Help                                         |
+| `-d`, `--debug`      | Turn on debug mode                           |
+| `--min-len=NUM`      | Minimum length for pattern match [Default 4] |
+| `--min-gap=NUM`      | Minimum gap [Default 1]                      |
+| `--max-gap=NUM`      | Maximum gap [Default 4]                      |
+| `--out-pdf=[0 or 1]` | Output pdf file [Default 1 (true)]           |
+| `--st-anchor=STRING` | Starting anchor [Default KWG]                |
+| `--en-anchor=STRING` | Ending anchor [Default GMA]                  |
