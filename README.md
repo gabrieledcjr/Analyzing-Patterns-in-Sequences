@@ -35,6 +35,6 @@ Once you are satisfied with the setup, you can run this command in the terminal 
 | `--min-len=NUM`      | Minimum length for pattern match `[Default 4]` |
 | `--min-gap=NUM`      | Minimum gap `[Default 1]`                      |
 | `--max-gap=NUM`      | Maximum gap `[Default 4]`                      |
-| `--out-pdf=[0 or 1]` | Output pdf file `[Default 1 (true)]`           |
+| `--out-pdf=[0 or 1]` | Output html/pdf file `[Default 1 (true)]`      |
 | `--st-anchor=STRING` | Starting anchor `[Default KWG]`                |
 | `--en-anchor=STRING` | Ending anchor `[Default GMA]`                  |

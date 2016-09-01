@@ -6,9 +6,6 @@ DEBUG = False
 # Character shifting to left to compare for similarity
 SHIFT = 5
 
-# Minimum length for similarity in patterns
-MIN_LEN = 4
-
 HTML_HEAD_TAG = """
 <head>
   <style type="text/css">

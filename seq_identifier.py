@@ -29,7 +29,7 @@ def usage():
   print "  --min-len=NUM         Minimum length for pattern match [Default 4]"
   print "  --min-gap=NUM         Minimum gap [Default 1]"
   print "  --max-gap=NUM         Maximum gap [Default 4]"
-  print "  --out-pdf=[0 or 1]    Output pdf file [Default 1 (true)]"
+  print "  --out-pdf=[0 or 1]    Output html/pdf file [Default 1 (true)]"
   print "  --st-anchor=STRING    Starting anchor [Default KWG]"
   print "  --en-anchor=STRING    Ending anchor [Default GMA]"
   print
@@ -322,7 +322,7 @@ def main(argv):
     htmlFile.write(html)
     htmlFile.close()
     pdfFile.close()
-    
+
 
 if __name__ == '__main__':
   main(sys.argv[1:])
