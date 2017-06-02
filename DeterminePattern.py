@@ -61,8 +61,8 @@ def DeterminePattern(sample, patIds, patterns, numPatterns, patLen,
         if letS == letP:
           if row > 0 and col > colSt and line[row-1][col-1] > 0:
             line[row][col] = line[row-1][col-1] + 1
-            if (row+1 == patLen[patNum] or col+1 == sampLen) or \
-               (nxtLetS != nxtLetP and line[row][col] >= minLen):
+            if (row+1 == patLen[patNum] or col+1 == sampLen or nxtLetS != nxtLetP) and \
+               (line[row][col] >= minLen):
               patStIdx = row-line[row][col] + 1
               patIndices = (patStIdx,row)
               samStIdx = col-line[row][col] + 1
